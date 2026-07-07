@@ -114,7 +114,6 @@ namespace Hogwards.Models {
                     .HasDefaultValue("Unknown", "DF_Wizard_BloodStatus");
                 entity.Property(e => e.House).HasMaxLength(50);
                 entity.Property(e => e.Name).HasMaxLength(100);
-                entity.Property(e => e.EntryYear).HasColumnType("int");
             });
 
             modelBuilder.Entity<vw_ActiveWizard>(entity =>

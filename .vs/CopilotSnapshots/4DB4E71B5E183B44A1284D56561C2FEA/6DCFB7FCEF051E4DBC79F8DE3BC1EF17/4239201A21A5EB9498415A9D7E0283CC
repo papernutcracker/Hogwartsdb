@@ -46,6 +46,7 @@ namespace Hogwards.Models
             }
 
             context.SaveChanges();
+            // Seed Wand records for these wizards if missing
             var seedNames = seed.Select(s => s.Name).ToList();
             var existingWizards = context.Wizards.Where(w => seedNames.Contains(w.Name)).ToList();
             foreach (var w in existingWizards)
@@ -74,7 +75,7 @@ namespace Hogwards.Models
             context.SaveChanges();
 
             var names = seed.Select(s => s.Name).ToList();
-            var added = context.Wizards.Include(w => w.Wand).Where(w => names.Contains(w.Name)).OrderBy(w => w.Name).ToList();
+            var added = context.Wizards.Where(w => names.Contains(w.Name)).OrderBy(w => w.Name).ToList();
 
             Console.WriteLine("Added/Existing Wizards:");
             foreach (var wizard in added)
@@ -83,7 +84,7 @@ namespace Hogwards.Models
                 Console.WriteLine($"Wizard: {wizard.Name}, House: {wizard.House}, EntryYear: {wizard.EntryYear?.ToString() ?? "(unknown)"}, Wand: {core}");
             }
 
-            var gryffindors = context.Wizards.Include(w => w.Wand).Where(w => w.House == "Gryffindor").ToList();
+            var gryffindors = context.Wizards.Where(w => w.House == "Gryffindor").ToList();
             Console.WriteLine();
             Console.WriteLine("Gryffindor wizards:");
             foreach (var g in gryffindors)

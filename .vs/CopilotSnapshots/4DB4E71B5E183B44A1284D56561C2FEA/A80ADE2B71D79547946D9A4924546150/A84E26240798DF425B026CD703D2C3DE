@@ -12,9 +12,6 @@ namespace Hogwards.Models
 
         public string House { get; set; } = null!;
 
-        // Year the wizard entered Hogwarts (nullable to avoid breaking existing rows)
-        public int? EntryYear { get; set; }
-
         public string? BloodStatus { get; set; }
 
         public bool IsActive { get; set; }

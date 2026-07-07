@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using Microsoft.EntityFrameworkCore;
-
+﻿
 namespace Hogwards.Models
 {
     public class Program
@@ -13,14 +11,17 @@ namespace Hogwards.Models
 
             var context = new HogwartsdbContext();
 
+            // Ensure the DB has the EntryYear column — add if missing
             try
             {
                 context.Database.ExecuteSqlRaw(@"IF COL_LENGTH('dbo.Wizards', 'EntryYear') IS NULL BEGIN ALTER TABLE dbo.Wizards ADD EntryYear int NULL; END");
             }
             catch
             {
+                // If raw SQL fails (permissions, different schema), continue — EntryYear may not be persisted
             }
 
+            // Add five wizards (if they don't already exist)
             var seed = new[]
             {
                 new Wizard { Name = "Гаррі Поттер", House = "Gryffindor", EntryYear = 1991, IsActive = true },
@@ -32,49 +33,17 @@ namespace Hogwards.Models
 
             foreach (var wiz in seed)
             {
-                var existing = context.Wizards.FirstOrDefault(w => w.Name == wiz.Name);
-                if (existing == null)
+                if (!context.Wizards.Any(w => w.Name == wiz.Name))
                 {
                     context.Wizards.Add(wiz);
                 }
-                else
-                {
-                    existing.House = wiz.House;
-                    existing.EntryYear = wiz.EntryYear;
-                    existing.IsActive = wiz.IsActive;
-                }
-            }
-
-            context.SaveChanges();
-            var seedNames = seed.Select(s => s.Name).ToList();
-            var existingWizards = context.Wizards.Where(w => seedNames.Contains(w.Name)).ToList();
-            foreach (var w in existingWizards)
-            {
-                if (!context.Wands.Any(x => x.WizardId == w.WizardId))
-                {
-                    var core = w.Name switch
-                    {
-                        "Гаррі Поттер" => "Phoenix feather",
-                        "Герміона Грейнджер" => "Dragon heartstring",
-                        "Рон Візлі" => "Unicorn hair",
-                        "Драко Мелфой" => "Dragon heartstring",
-                        "Луна Лавґуд" => "Thestral tail hair",
-                        _ => "Unspecified"
-                    };
-
-                    context.Wands.Add(new Wand
-                    {
-                        WizardId = w.WizardId,
-                        CoreMaterial = core,
-                        Length = 11.0m
-                    });
-                }
             }
 
             context.SaveChanges();
 
+            // Print the added/known wizards
             var names = seed.Select(s => s.Name).ToList();
-            var added = context.Wizards.Include(w => w.Wand).Where(w => names.Contains(w.Name)).OrderBy(w => w.Name).ToList();
+            var added = context.Wizards.Where(w => names.Contains(w.Name)).OrderBy(w => w.Name).ToList();
 
             Console.WriteLine("Added/Existing Wizards:");
             foreach (var wizard in added)
@@ -83,7 +52,8 @@ namespace Hogwards.Models
                 Console.WriteLine($"Wizard: {wizard.Name}, House: {wizard.House}, EntryYear: {wizard.EntryYear?.ToString() ?? "(unknown)"}, Wand: {core}");
             }
 
-            var gryffindors = context.Wizards.Include(w => w.Wand).Where(w => w.House == "Gryffindor").ToList();
+            // FILTER & UPDATE: find Gryffindor wizards and display name + entry year
+            var gryffindors = context.Wizards.Where(w => w.House == "Gryffindor").ToList();
             Console.WriteLine();
             Console.WriteLine("Gryffindor wizards:");
             foreach (var g in gryffindors)
@@ -91,6 +61,7 @@ namespace Hogwards.Models
                 Console.WriteLine($"- {g.Name} (Entry year: {g.EntryYear?.ToString() ?? "(unknown)"})");
             }
 
+            // Update Ron Weasley's entry year to 1992 and save
             var ron = context.Wizards.FirstOrDefault(w => w.Name == "Рон Візлі");
             if (ron != null)
             {

@@ -5,14 +5,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{9EE496A3-27F4-AA4B-D6E7-7735CDCB47D4}|Hogwards.csproj|c:\\projects\\smartportfolio\\hogwardsgb\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9EE496A3-27F4-AA4B-D6E7-7735CDCB47D4}|Hogwards.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9EE496A3-27F4-AA4B-D6E7-7735CDCB47D4}|Hogwards.csproj|c:\\projects\\smartportfolio\\hogwardsgb\\models\\hogwartsdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9EE496A3-27F4-AA4B-D6E7-7735CDCB47D4}|Hogwards.csproj|solutionrelative:models\\hogwartsdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9EE496A3-27F4-AA4B-D6E7-7735CDCB47D4}|Hogwards.csproj|c:\\projects\\smartportfolio\\hogwardsgb\\models\\vw_activewizard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9EE496A3-27F4-AA4B-D6E7-7735CDCB47D4}|Hogwards.csproj|solutionrelative:models\\vw_activewizard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,11 +14,23 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{fbcae063-e2c0-4ab1-a516-996ea3dafb72}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
             },
             {
               "$type": "Document",
@@ -36,48 +40,10 @@
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "C:\\Projects\\SmartPortfolio\\HogwardsGB\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAQwC8AAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-07-07T17:25:07.624Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "HogwartsdbContext.cs",
-              "DocumentMoniker": "C:\\Projects\\SmartPortfolio\\HogwardsGB\\Models\\HogwartsdbContext.cs",
-              "RelativeDocumentMoniker": "Models\\HogwartsdbContext.cs",
-              "ToolTip": "C:\\Projects\\SmartPortfolio\\HogwardsGB\\Models\\HogwartsdbContext.cs",
-              "RelativeToolTip": "Models\\HogwartsdbContext.cs",
-              "ViewState": "AgIAAGcAAAAAAAAAAAAcwHoAAAAyAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T16:53:31.272Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "vw_ActiveWizard.cs",
-              "DocumentMoniker": "C:\\Projects\\SmartPortfolio\\HogwardsGB\\Models\\vw_ActiveWizard.cs",
-              "RelativeDocumentMoniker": "Models\\vw_ActiveWizard.cs",
-              "ToolTip": "C:\\Projects\\SmartPortfolio\\HogwardsGB\\Models\\vw_ActiveWizard.cs",
-              "RelativeToolTip": "Models\\vw_ActiveWizard.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAA8AAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T16:49:55.109Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
             }
           ]
         }
