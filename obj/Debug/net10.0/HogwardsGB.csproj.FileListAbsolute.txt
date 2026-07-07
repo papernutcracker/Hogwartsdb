@@ -1,0 +1,14 @@
+C:\Projects\SmartPortfolio\HogwardsGB\bin\Debug\net10.0\HogwardsGB.exe
+C:\Projects\SmartPortfolio\HogwardsGB\bin\Debug\net10.0\HogwardsGB.deps.json
+C:\Projects\SmartPortfolio\HogwardsGB\bin\Debug\net10.0\HogwardsGB.runtimeconfig.json
+C:\Projects\SmartPortfolio\HogwardsGB\bin\Debug\net10.0\HogwardsGB.dll
+C:\Projects\SmartPortfolio\HogwardsGB\bin\Debug\net10.0\HogwardsGB.pdb
+C:\Projects\SmartPortfolio\HogwardsGB\obj\Debug\net10.0\HogwardsGB.GeneratedMSBuildEditorConfig.editorconfig
+C:\Projects\SmartPortfolio\HogwardsGB\obj\Debug\net10.0\HogwardsGB.AssemblyInfoInputs.cache
+C:\Projects\SmartPortfolio\HogwardsGB\obj\Debug\net10.0\HogwardsGB.AssemblyInfo.cs
+C:\Projects\SmartPortfolio\HogwardsGB\obj\Debug\net10.0\HogwardsGB.csproj.CoreCompileInputs.cache
+C:\Projects\SmartPortfolio\HogwardsGB\obj\Debug\net10.0\HogwardsGB.dll
+C:\Projects\SmartPortfolio\HogwardsGB\obj\Debug\net10.0\refint\HogwardsGB.dll
+C:\Projects\SmartPortfolio\HogwardsGB\obj\Debug\net10.0\HogwardsGB.pdb
+C:\Projects\SmartPortfolio\HogwardsGB\obj\Debug\net10.0\HogwardsGB.genruntimeconfig.cache
+C:\Projects\SmartPortfolio\HogwardsGB\obj\Debug\net10.0\ref\HogwardsGB.dll
