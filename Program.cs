@@ -5,17 +5,21 @@ namespace Hogwards.Models
     {
         public static void Main(string[] args)
         {
+            System.Text.Encoding utf8 = new System.Text.UTF8Encoding(false);
+            Console.OutputEncoding = utf8;
+            Console.InputEncoding = utf8;
+
             var context = new HogwartsdbContext();
 
-            var activeWizards = context.Vw_ActiveWizards
+            var wizards = context.Wizards
                 .OrderBy(w => w.Name)
-                .Select(w => w.Name)
                 .ToList();
 
-            Console.WriteLine("Active Wizards: ");
-            foreach (var wizard in activeWizards) {
-
-                Console.WriteLine($"- {wizard}");
+            Console.WriteLine("Wizards:");
+            foreach (var wizard in wizards)
+            {
+                var core = wizard.Wand?.CoreMaterial ?? "(no wand)";
+                Console.WriteLine($"Wizard: {wizard.Name}, House: {wizard.House}, Wand: {core}");
             }
         }
     }
