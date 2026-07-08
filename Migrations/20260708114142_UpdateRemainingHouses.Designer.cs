@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hogwards.Migrations
 {
     [DbContext(typeof(HogwartsdbContext))]
-    [Migration("20260707233855_AddAgeToWizards")]
-    partial class AddAgeToWizards
+    [Migration("20260708114142_UpdateRemainingHouses")]
+    partial class UpdateRemainingHouses
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -170,7 +170,7 @@ namespace Hogwards.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("WizardId"));
 
-                    b.Property<int>("Age")
+                    b.Property<int?>("Age")
                         .HasColumnType("int");
 
                     b.Property<string>("BloodStatus")
@@ -223,6 +223,25 @@ namespace Hogwards.Migrations
                     b.ToTable((string)null);
 
                     b.ToView("vw_ActiveWizards", (string)null);
+                });
+
+            modelBuilder.Entity("Hogwards.Models.vw_WizardWand", b =>
+                {
+                    b.Property<string>("House")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Material")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WizardName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToTable((string)null);
+
+                    b.ToView("vw_WizardWands", (string)null);
                 });
 
             modelBuilder.Entity("Hogwards.Models.HousePoint", b =>

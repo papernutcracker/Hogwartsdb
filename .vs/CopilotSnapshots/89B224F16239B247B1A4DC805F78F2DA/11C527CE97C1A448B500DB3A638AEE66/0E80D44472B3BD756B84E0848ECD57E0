@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -136,12 +135,5 @@ namespace Hogwards.Models {
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
-
-        // Executes the stored procedure sp_GetWizardsByHouse and returns the matching wizards.
-        public Task<List<Wizard>> GetWizardsByHouseAsync(string house)
-        {
-            // Use FromSqlRaw to call the stored procedure. Parameterized to avoid SQL injection.
-            return Wizards.FromSqlRaw("EXEC sp_GetWizardsByHouse @House = {0}", house).ToListAsync();
-        }
     }
 }

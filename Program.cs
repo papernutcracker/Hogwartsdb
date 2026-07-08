@@ -1,5 +1,6 @@
-﻿using System.Linq;
+﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Hogwards.Models
 {
@@ -13,85 +14,18 @@ namespace Hogwards.Models
 
             var context = new HogwartsdbContext();
 
-            
+            string targetHouse = "Грифіндор";
+            var houseParam = new SqlParameter("@House", targetHouse);
 
-            var seed = new[]
-            {
-                new Wizard { Name = "Гаррі Поттер", House = "Gryffindor", EntryYear = 1991, IsActive = true },
-                new Wizard { Name = "Герміона Грейнджер", House = "Gryffindor", EntryYear = 1991, IsActive = true },
-                new Wizard { Name = "Рон Візлі", House = "Gryffindor", EntryYear = 1991, IsActive = true },
-                new Wizard { Name = "Драко Мелфой", House = "Slytherin", EntryYear = 1991, IsActive = true },
-                new Wizard { Name = "Луна Лавґуд", House = "Ravenclaw", EntryYear = 1992, IsActive = true }
-            };
+            var wizards = context.Wizards
+                .FromSqlRaw("EXECUTE dbo.GetWizardsByHouse @House", houseParam)
+                .ToList();
 
-            foreach (var wiz in seed)
+            foreach (var w in wizards)
             {
-                var existing = context.Wizards.FirstOrDefault(w => w.Name == wiz.Name);
-                if (existing == null)
-                {
-                    context.Wizards.Add(wiz);
-                }
-                else
-                {
-                    existing.House = wiz.House;
-                    existing.EntryYear = wiz.EntryYear;
-                    existing.IsActive = wiz.IsActive;
-                }
+                Console.WriteLine($"{w.Name} навчається на факультеті {w.House}");
             }
 
-            context.SaveChanges();
-            var seedNames = seed.Select(s => s.Name).ToList();
-            var existingWizards = context.Wizards.Where(w => seedNames.Contains(w.Name)).ToList();
-            foreach (var w in existingWizards)
-            {
-                if (!context.Wands.Any(x => x.WizardId == w.WizardId))
-                {
-                    var core = w.Name switch
-                    {
-                        "Гаррі Поттер" => "Phoenix feather",
-                        "Герміона Грейнджер" => "Dragon heartstring",
-                        "Рон Візлі" => "Unicorn hair",
-                        "Драко Мелфой" => "Dragon heartstring",
-                        "Луна Лавґуд" => "Thestral tail hair",
-                        _ => "Unspecified"
-                    };
-
-                    context.Wands.Add(new Wand
-                    {
-                        WizardId = w.WizardId,
-                        CoreMaterial = core,
-                        Length = 11.0m
-                    });
-                }
-            }
-
-            context.SaveChanges();
-
-            var names = seed.Select(s => s.Name).ToList();
-            var added = context.Wizards.Include(w => w.Wand).Where(w => names.Contains(w.Name)).OrderBy(w => w.Name).ToList();
-
-            Console.WriteLine("Added/Existing Wizards:");
-            foreach (var wizard in added)
-            {
-                var core = wizard.Wand?.CoreMaterial ?? "(no wand)";
-                Console.WriteLine($"Wizard: {wizard.Name}, House: {wizard.House}, EntryYear: {wizard.EntryYear?.ToString() ?? "(unknown)"}, Wand: {core}");
-            }
-
-            var gryffindors = context.Wizards.Include(w => w.Wand).Where(w => w.House == "Gryffindor").ToList();
-            Console.WriteLine();
-            Console.WriteLine("Gryffindor wizards:");
-            foreach (var g in gryffindors)
-            {
-                Console.WriteLine($"- {g.Name} (Entry year: {g.EntryYear?.ToString() ?? "(unknown)"})");
-            }
-
-            var ron = context.Wizards.FirstOrDefault(w => w.Name == "Рон Візлі");
-            if (ron != null)
-            {
-                ron.EntryYear = 1992;
-                context.SaveChanges();
-                Console.WriteLine($"Updated {ron.Name} entry year to {ron.EntryYear}");
-            }
         }
     }
 }

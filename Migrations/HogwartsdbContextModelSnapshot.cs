@@ -222,6 +222,25 @@ namespace Hogwards.Migrations
                     b.ToView("vw_ActiveWizards", (string)null);
                 });
 
+            modelBuilder.Entity("Hogwards.Models.vw_WizardWand", b =>
+                {
+                    b.Property<string>("House")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Material")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WizardName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToTable((string)null);
+
+                    b.ToView("vw_WizardWands", (string)null);
+                });
+
             modelBuilder.Entity("Hogwards.Models.HousePoint", b =>
                 {
                     b.HasOne("Hogwards.Models.Subject", "Subject")

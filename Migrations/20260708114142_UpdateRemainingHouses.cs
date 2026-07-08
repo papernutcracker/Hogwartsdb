@@ -5,24 +5,18 @@
 namespace Hogwards.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class UpdateRemainingHouses : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            //migrationBuilder.AddColumn<int>(
-            //    name: "EntryYear",
-            //    table: "Wizards",
-            //    type: "int",
-            //    nullable: true);
+
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "EntryYear",
-                table: "Wizards");
+
         }
     }
 }
