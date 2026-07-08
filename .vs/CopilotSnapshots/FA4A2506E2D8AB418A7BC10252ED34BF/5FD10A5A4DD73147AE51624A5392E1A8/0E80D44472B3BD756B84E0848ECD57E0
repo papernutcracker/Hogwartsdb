@@ -29,7 +29,6 @@ namespace Hogwards.Models {
         public virtual DbSet<Wizard> Wizards { get; set; }
 
         public virtual DbSet<vw_ActiveWizard> Vw_ActiveWizards { get; set; }
-        public virtual DbSet<vw_WizardWand> Vw_WizardWands { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -123,12 +122,6 @@ namespace Hogwards.Models {
             {
                 entity.HasNoKey();
                 entity.ToView("vw_ActiveWizards");
-            });
-
-            modelBuilder.Entity<vw_WizardWand>(entity =>
-            {
-                entity.HasNoKey();
-                entity.ToView("vw_WizardWands");
             });
 
             OnModelCreatingPartial(modelBuilder);
