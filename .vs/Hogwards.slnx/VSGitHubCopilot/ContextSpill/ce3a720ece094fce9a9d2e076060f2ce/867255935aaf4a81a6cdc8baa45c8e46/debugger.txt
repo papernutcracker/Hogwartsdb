@@ -1,0 +1,226 @@
+﻿## EXCEPTION
+Exception Type: System.Data.SqlTypes.SqlNullValueException
+Exception Message: Data is Null. This method or property cannot be called on Null values.
+The callstack context, if included, corresponds to the thread where this exception occurred. There is no need to identify this thread by other means.
+The top most frame in the callstack context should correspond to the place the exception message was thrown from. Code may or may not have been provided for it but can be requested.
+
+## CALLSTACK
+Thread ID: 16036
+[1] [External Code]
+[2] [Exception] Hogwards.dll!Hogwards.Models.Program.Main
+This is the current user focused stack frame. The provided locals context corresponds to this stack frame, but you may evaluate expressions and retrieve code for any frame.
+Code for the stack frame:
+```csharp Program.cs
+8:         public static void Main(string[] args)
+9:         {
+10:             System.Text.Encoding utf8 = new System.Text.UTF8Encoding(false);
+11:             Console.OutputEncoding = utf8;
+12:             Console.InputEncoding = utf8;
+13: 
+14:             var context = new HogwartsdbContext();
+15: 
+16:             try
+17:             {
+18:                 context.Database.ExecuteSqlRaw(@"IF COL_LENGTH('dbo.Wizards', 'EntryYear') IS NULL BEGIN ALTER TABLE dbo.Wizards ADD EntryYear int NULL; END");
+19:             }
+20:             catch
+21:             {
+22:             }
+23:             try
+24:             {
+25:                 context.Database.ExecuteSqlRaw(@"IF COL_LENGTH('dbo.Wizards', 'Age') IS NULL BEGIN ALTER TABLE dbo.Wizards ADD Age int NULL; END");
+26:             }
+27:             catch
+28:             {
+29:             }
+30: 
+31:             var seed = new[]
+32:             {
+33:                 new Wizard { Name = "Гаррі Поттер", House = "Gryffindor", EntryYear = 1991, IsActive = true },
+34:                 new Wizard { Name = "Герміона Грейнджер", House = "Gryffindor", EntryYear = 1991, IsActive = true },
+35:                 new Wizard { Name = "Рон Візлі", House = "Gryffindor", EntryYear = 1991, IsActive = true },
+36:                 new Wizard { Name = "Драко Мелфой", House = "Slytherin", EntryYear = 1991, IsActive = true },
+37:                 new Wizard { Name = "Луна Лавґуд", House = "Ravenclaw", EntryYear = 1992, IsActive = true }
+38:             };
+39: 
+40:             foreach (var wiz in seed)
+41:             {
+42:                 var existing = context.Wizards.FirstOrDefault(w => w.Name == wiz.Name);
+43:                 if (existing == null)
+44:                 {
+45:                     context.Wizards.Add(wiz);
+46:                 }
+47:                 else
+48:                 {
+49:                     existing.House = wiz.House;
+50:                     existing.EntryYear = wiz.EntryYear;
+51:                     existing.IsActive = wiz.IsActive;
+52:                 }
+53:             }
+54: 
+55:             context.SaveChanges();
+56:             var seedNames = seed.Select(s => s.Name).ToList();
+57:             var existingWizards = context.Wizards.Where(w => seedNames.Contains(w.Name)).ToList();
+58:             foreach (var w in existingWizards)
+59:             {
+60:                 if (!context.Wands.Any(x => x.WizardId == w.WizardId))
+61:                 {
+62:                     var core = w.Name switch
+63:                     {
+64:                         "Гаррі Поттер" => "Phoenix feather",
+65:                         "Герміона Грейнджер" => "Dragon heartstring",
+66:                         "Рон Візлі" => "Unicorn hair",
+67:                         "Драко Мелфой" => "Dragon heartstring",
+68:                         "Луна Лавґуд" => "Thestral tail hair",
+69:                         _ => "Unspecified"
+70:                     };
+71: 
+72:                     context.Wands.Add(new Wand
+73:                     {
+74:                         WizardId = w.WizardId,
+75:                         CoreMaterial = core,
+76:                         Length = 11.0m
+77:                     });
+78:                 }
+79:             }
+80: 
+81:             context.SaveChanges();
+82: 
+83:             var names = seed.Select(s => s.Name).ToList();
+84:             var added = context.Wizards.Include(w => w.Wand).Where(w => names.Contains(w.Name)).OrderBy(w => w.Name).ToList();
+85: 
+86:             Console.WriteLine("Added/Existing Wizards:");
+87:             foreach (var wizard in added)
+88:             {
+89:                 var core = wizard.Wand?.CoreMaterial ?? "(no wand)";
+90:                 Console.WriteLine($"Wizard: {wizard.Name}, House: {wizard.House}, EntryYear: {wizard.EntryYear?.ToString() ?? "(unknown)"}, Wand: {core}");
+91:             }
+92: 
+93:             var gryffindors = context.Wizards.Include(w => w.Wand).Where(w => w.House == "Gryffindor").ToList();
+94:             Console.WriteLine();
+95:             Console.WriteLine("Gryffindor wizards:");
+96:             foreach (var g in gryffindors)
+97:             {
+98:                 Console.WriteLine($"- {g.Name} (Entry year: {g.EntryYear?.ToString() ?? "(unknown)"})");
+99:             }
+100: 
+101:             var ron = context.Wizards.FirstOrDefault(w => w.Name == "Рон Візлі");
+102:             if (ron != null)
+103:             {
+104:                 ron.EntryYear = 1992;
+105:                 context.SaveChanges();
+106:                 Console.WriteLine($"Updated {ron.Name} entry year to {ron.EntryYear}");
+107:             }
+108:         }
+```
+Current statement: line 42
+[3] [External Code]
+[4] Hogwards.dll!Hogwards.Models.Program.Main
+Code for the stack frame:
+```csharp Program.cs
+8:         public static void Main(string[] args)
+9:         {
+10:             System.Text.Encoding utf8 = new System.Text.UTF8Encoding(false);
+11:             Console.OutputEncoding = utf8;
+12:             Console.InputEncoding = utf8;
+13: 
+14:             var context = new HogwartsdbContext();
+15: 
+16:             try
+17:             {
+18:                 context.Database.ExecuteSqlRaw(@"IF COL_LENGTH('dbo.Wizards', 'EntryYear') IS NULL BEGIN ALTER TABLE dbo.Wizards ADD EntryYear int NULL; END");
+19:             }
+20:             catch
+21:             {
+22:             }
+23:             try
+24:             {
+25:                 context.Database.ExecuteSqlRaw(@"IF COL_LENGTH('dbo.Wizards', 'Age') IS NULL BEGIN ALTER TABLE dbo.Wizards ADD Age int NULL; END");
+26:             }
+27:             catch
+28:             {
+29:             }
+30: 
+31:             var seed = new[]
+32:             {
+33:                 new Wizard { Name = "Гаррі Поттер", House = "Gryffindor", EntryYear = 1991, IsActive = true },
+34:                 new Wizard { Name = "Герміона Грейнджер", House = "Gryffindor", EntryYear = 1991, IsActive = true },
+35:                 new Wizard { Name = "Рон Візлі", House = "Gryffindor", EntryYear = 1991, IsActive = true },
+36:                 new Wizard { Name = "Драко Мелфой", House = "Slytherin", EntryYear = 1991, IsActive = true },
+37:                 new Wizard { Name = "Луна Лавґуд", House = "Ravenclaw", EntryYear = 1992, IsActive = true }
+38:             };
+39: 
+40:             foreach (var wiz in seed)
+41:             {
+42:                 var existing = context.Wizards.FirstOrDefault(w => w.Name == wiz.Name);
+43:                 if (existing == null)
+44:                 {
+45:                     context.Wizards.Add(wiz);
+46:                 }
+47:                 else
+48:                 {
+49:                     existing.House = wiz.House;
+50:                     existing.EntryYear = wiz.EntryYear;
+51:                     existing.IsActive = wiz.IsActive;
+52:                 }
+53:             }
+54: 
+55:             context.SaveChanges();
+56:             var seedNames = seed.Select(s => s.Name).ToList();
+57:             var existingWizards = context.Wizards.Where(w => seedNames.Contains(w.Name)).ToList();
+58:             foreach (var w in existingWizards)
+59:             {
+60:                 if (!context.Wands.Any(x => x.WizardId == w.WizardId))
+61:                 {
+62:                     var core = w.Name switch
+63:                     {
+64:                         "Гаррі Поттер" => "Phoenix feather",
+65:                         "Герміона Грейнджер" => "Dragon heartstring",
+66:                         "Рон Візлі" => "Unicorn hair",
+67:                         "Драко Мелфой" => "Dragon heartstring",
+68:                         "Луна Лавґуд" => "Thestral tail hair",
+69:                         _ => "Unspecified"
+70:                     };
+71: 
+72:                     context.Wands.Add(new Wand
+73:                     {
+74:                         WizardId = w.WizardId,
+75:                         CoreMaterial = core,
+76:                         Length = 11.0m
+77:                     });
+78:                 }
+79:             }
+80: 
+81:             context.SaveChanges();
+82: 
+83:             var names = seed.Select(s => s.Name).ToList();
+84:             var added = context.Wizards.Include(w => w.Wand).Where(w => names.Contains(w.Name)).OrderBy(w => w.Name).ToList();
+85: 
+86:             Console.WriteLine("Added/Existing Wizards:");
+87:             foreach (var wizard in added)
+88:             {
+89:                 var core = wizard.Wand?.CoreMaterial ?? "(no wand)";
+90:                 Console.WriteLine($"Wizard: {wizard.Name}, House: {wizard.House}, EntryYear: {wizard.EntryYear?.ToString() ?? "(unknown)"}, Wand: {core}");
+91:             }
+92: 
+93:             var gryffindors = context.Wizards.Include(w => w.Wand).Where(w => w.House == "Gryffindor").ToList();
+94:             Console.WriteLine();
+95:             Console.WriteLine("Gryffindor wizards:");
+96:             foreach (var g in gryffindors)
+97:             {
+98:                 Console.WriteLine($"- {g.Name} (Entry year: {g.EntryYear?.ToString() ?? "(unknown)"})");
+99:             }
+100: 
+101:             var ron = context.Wizards.FirstOrDefault(w => w.Name == "Рон Візлі");
+102:             if (ron != null)
+103:             {
+104:                 ron.EntryYear = 1992;
+105:                 context.SaveChanges();
+106:                 Console.WriteLine($"Updated {ron.Name} entry year to {ron.EntryYear}");
+107:             }
+108:         }
+```
+Current statement: line 42
+
+## LOCALS
+

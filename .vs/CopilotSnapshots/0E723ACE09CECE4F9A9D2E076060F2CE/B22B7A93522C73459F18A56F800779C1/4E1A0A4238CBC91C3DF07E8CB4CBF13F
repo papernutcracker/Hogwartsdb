@@ -21,6 +21,6 @@ namespace Hogwards.Models
 
         public virtual Wand? Wand { get; set; }
 
-        public int? Age { get; set; }
+        public int Age { get; set; }
     }
 }

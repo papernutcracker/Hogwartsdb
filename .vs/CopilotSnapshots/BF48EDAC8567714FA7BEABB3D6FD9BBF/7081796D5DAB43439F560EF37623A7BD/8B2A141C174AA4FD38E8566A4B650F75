@@ -13,7 +13,13 @@ namespace Hogwards.Models
 
             var context = new HogwartsdbContext();
 
-            
+            try
+            {
+                context.Database.ExecuteSqlRaw(@"IF COL_LENGTH('dbo.Wizards', 'EntryYear') IS NULL BEGIN ALTER TABLE dbo.Wizards ADD EntryYear int NULL; END");
+            }
+            catch
+            {
+            }
 
             var seed = new[]
             {
