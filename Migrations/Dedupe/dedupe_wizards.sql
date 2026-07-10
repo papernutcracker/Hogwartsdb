@@ -1,5 +1,0 @@
-DELETE FROM WANDS WHERE WizardId = 9;
-
-DELETE FROM HousePoints WHERE WizardId = 9;
-
-DELETE FROM Wizards WHERE WizardId = 9;

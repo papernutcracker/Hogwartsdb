@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Hogwards")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+aae40c73d8e625999000a6decc6da92ec1f80f23")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+001e176c815a5a1b1c937f53dea4500025186886")]
 [assembly: System.Reflection.AssemblyProductAttribute("Hogwards")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Hogwards")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
