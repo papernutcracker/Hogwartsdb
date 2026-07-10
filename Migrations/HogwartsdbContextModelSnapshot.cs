@@ -195,7 +195,8 @@ namespace Hogwards.Migrations
                     b.HasKey("WizardId")
                         .HasName("PK__Wizards__EB46AA85423A4160");
 
-                    b.HasIndex(new[] { "Name" }, "IX_Wizards_Name");
+                    b.HasIndex(new[] { "Name" }, "IX_Wizards_Name")
+                        .IsUnique();
 
                     b.ToTable("Wizards");
                 });

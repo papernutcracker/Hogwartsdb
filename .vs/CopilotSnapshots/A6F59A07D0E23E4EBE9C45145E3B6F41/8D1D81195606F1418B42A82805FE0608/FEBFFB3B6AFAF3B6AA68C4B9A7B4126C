@@ -1,0 +1,41 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Hogwards.Models;
+using Microsoft.EntityFrameworkCore;
+using Xunit;
+
+namespace Hogwards.TEST
+{
+    public class WizardTests
+    {
+        [Fact]
+        public void GetRWizards_ShouldReturnOnlyRStudent()
+        {
+            var options = new DbContextOptionsBuilder<HogwartsdbContext>()
+                .UseInMemoryDatabase(databaseName: "TestDatabase")
+                .Options;
+
+            using (var context = new HogwartsdbContext(options))
+            {
+                context.Wizards.AddRange(
+                    new Wizard { WizardId = 1, Name = "Harry Potter", House = "Gryffindor", BloodStatus = "semi-blood" },
+                    new Wizard { WizardId = 2, Name = "Hermione Granger", House = "Gryffindor", BloodStatus = "mud-blood" },
+                    new Wizard { WizardId = 3, Name = "Luna Lovegood", House = "Ravenclaw", BloodStatus = "pure-blood" }
+                );
+                context.SaveChanges();
+            }
+            using (var context = new HogwartsdbContext(options))
+            {
+                var rStudents = context.Wizards
+                    .Where(w => w.House == "Ravenclaw")
+                    .ToList(); 
+
+                var singleStudent = Assert.Single(rStudents);
+                Assert.Equal("Luna Lovegood", rStudents[0].Name);
+                Assert.Equal(1, rStudents.Count);
+            }
+        }
+          
+    }
+}

@@ -1,0 +1,66 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Hogwards.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.Sqlite;
+using Xunit;
+
+namespace Hogwards.TEST
+{
+    public class WizardTests
+    {
+        [Fact]
+        public void GetRWizards_ShouldReturnOnlyRStudent()
+        {
+            var options = new DbContextOptionsBuilder<HogwartsdbContext>()
+                .UseInMemoryDatabase(databaseName: "TestDatabase")
+                .Options;
+
+            using (var context = new HogwartsdbContext(options))
+            {
+                context.Wizards.AddRange(
+                    new Wizard { WizardId = 1, Name = "Harry Potter", House = "Gryffindor", BloodStatus = "semi-blood" },
+                    new Wizard { WizardId = 2, Name = "Hermione Granger", House = "Gryffindor", BloodStatus = "mud-blood" },
+                    new Wizard { WizardId = 3, Name = "Luna Lovegood", House = "Ravenclaw", BloodStatus = "pure-blood" }
+                );
+                context.SaveChanges();
+            }
+
+
+            using (var context = new HogwartsdbContext(options))
+            {
+                var rStudents = context.Wizards
+                    .Where(w => w.House == "Ravenclaw")
+                    .ToList(); 
+
+                var singleStudent = Assert.Single(rStudents);
+                Assert.Equal("Luna Lovegood", rStudents[0].Name);
+                Assert.Equal(1, rStudents.Count);
+            }
+        }
+
+        [Fact]
+        public void AddingDuplicateWizardName_ShouldThrowDbUpdateException()
+        {
+            using var connection = new SqliteConnection("DataSource=:memory:");
+            connection.Open();
+
+            var options = new DbContextOptionsBuilder<HogwartsdbContext>()
+                .UseSqlite(connection)
+                .Options;
+
+            using (var context = new HogwartsdbContext(options))
+            {
+                context.Database.EnsureCreated();
+
+                context.Wizards.Add(new Wizard { Name = "Albus Dumbledore", House = "Gryffindor" });
+                context.SaveChanges();
+
+                context.Wizards.Add(new Wizard { Name = "Albus Dumbledore", House = "Slytherin" });
+
+                Assert.Throws<DbUpdateException>(() => context.SaveChanges());
+            }
+        }
+    }
+}
